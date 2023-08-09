@@ -5,6 +5,14 @@ on:
 
 jobs:
   docker-compose:
+    name: deploying
+    env:
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      WM_IMAGE: ${{ vars.WM_IMAGE }}
+      WM_BASE_URL: ${{ secrets.WM_BASE_URL }}
+      WM_REQUEST_SIZE_LIMIT: ${{ vars.WM_REQUEST_SIZE_LIMIT }}
     runs-on: 
         group: default
         labels: unraid
