@@ -8,7 +8,7 @@ services:
     image: postgres:14
     restart: unless-stopped
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - /mnt/cache/appdata/postgresql14_windmill:/var/lib/postgresql/data
     ports:
       - 5433:5432
     environment:
@@ -70,7 +70,7 @@ services:
     volumes:
       # mount the docker socket to allow to run docker containers from within the workers
       - /var/run/docker.sock:/var/run/docker.sock
-      - worker_dependency_cache:/tmp/windmill/cache
+      - /mnt/cache/appdata/worker_dependency_cache:/tmp/windmill/cache
 
   ## This worker is specialized for "native" jobs. They run in-process and can thus be parallelized to more than 1 at a time on a given worker which is why NUM_WORKERS is set to 4
   windmill_worker_native:
@@ -106,7 +106,7 @@ services:
     expose:
       - 3001
     volumes:
-      - lsp_cache:/root/.cache
+      - /mnt/cache/appdata/lsp_cache:/root/.cache
 
   multiplayer:
     image: ghcr.io/windmill-labs/windmill-multiplayer:latest
@@ -115,8 +115,3 @@ services:
     restart: unless-stopped
     expose:
       - 3002
-
-volumes:
-  db_data: /mnt/cache/appdata/postgresql14_windmill
-  worker_dependency_cache: /mnt/cache/appdata/worker_dependency_cache
-  lsp_cache: /mnt/cache/appdata/lsp_cache
