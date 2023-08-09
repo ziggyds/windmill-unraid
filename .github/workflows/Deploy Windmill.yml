@@ -6,6 +6,11 @@ on:
 jobs:
   docker-compose:
     name: Deploying
+    environment: unraid
+    runs-on: 
+      group: default
+      labels: unraid
+      
     env:
       DB_USER: ${{ secrets.DB_USER }}
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
@@ -13,10 +18,7 @@ jobs:
       WM_IMAGE: ${{ vars.WM_IMAGE }}
       WM_BASE_URL: ${{ secrets.WM_BASE_URL }}
       WM_REQUEST_SIZE_LIMIT: ${{ vars.WM_REQUEST_SIZE_LIMIT }}
-    runs-on: 
-        group: default
-        labels: unraid
-    environment: unraid
+
     steps:    
         - uses: actions/checkout@v3
         - name: Docker Compose Action
